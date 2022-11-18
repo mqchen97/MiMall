@@ -1,117 +1,119 @@
 <template>
-    <div>
-    <div class="nav-topbar">
-        <div class="container">
-            <div class="topbar-menu">
-                <a href="javascript:;">小米商城</a>
-                <a href="javascript:;">MUI</a>
-                <a href="javascript:;">云服务</a>
-                <a href="javascript:;">协议规则</a>
-            </div>
-            <div class="topbar-user">
-                <a href="javascript:;">登录</a>
-                <a href="javascript:;">注册</a>
-                <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
+    <div class="header">
+        <div class="nav-topbar">
+            <div class="container">
+                <div class="topbar-menu">
+                    <a href="javascript:;">小米商城</a>
+                    <a href="javascript:;">MUI</a>
+                    <a href="javascript:;">云服务</a>
+                    <a href="javascript:;">协议规则</a>
+                </div>
+                <div class="topbar-user">
+                    <a href="javascript:;" v-if="username">{{username}}</a>
+                    <a href="javascript:;" v-if="!username" @click="login">登录</a>
+                    <a href="javascript:;" v-if="username">我的订单</a>
+                    <a href="javascript:;"  v-if="!username">注册</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="nav-header">
-        <div class="container">
-            <div class="header-logo">
-                <a href="/#/index"></a>
-            </div>
-            <div class="header-menu">
-                <div class="item-menu">
-                    <span>小米手机</span>
-                    <div class="children">
-                        <ul>
-                            <li class="product" v-for="(item,index) in phoneList" :key="index">
-                                <a :href="`/#/product/${item.id}`" target="_blank">
+        <div class="nav-header">
+            <div class="container">
+                <div class="header-logo">
+                    <a href="/#/index"></a>
+                </div>
+                <div class="header-menu">
+                    <div class="item-menu">
+                        <span>小米手机</span>
+                        <div class="children">
+                            <ul>
+                                <li class="product" v-for="(item,index) in phoneList" :key="index">
+                                    <a :href="`/#/product/${item.id}`" target="_blank">
+                                        <div class="pro-img">
+                                            <img :src="item.mainImage" :alt="item.name">
+                                        </div>
+                                        <div class="pro-name">{{item.name}}</div>
+                                        <div class="pro-price">{{item.price | currency}}元</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="item-menu">
+                        <span>RedMi红米</span>
+                        <!-- <div class="children"></div> -->
+                    </div>
+                    <div class="item-menu">
+                        <span>电视</span>
+                        <div class="children">
+                            <ul>
+                                <li class="product">
+                                <a href="" target="_blank">
                                     <div class="pro-img">
-                                        <img :src="item.mainImage" :alt="item.name">
+                                    <img src="/imgs/nav-img/nav-3-1.jpg" alt="">
                                     </div>
-                                    <div class="pro-name">{{item.name}}</div>
-                                    <div class="pro-price">{{item.price | currency}}元</div>
+                                    <div class="pro-name">小米壁画电视 65英寸</div>
+                                    <div class="pro-price">6999元</div>
                                 </a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li class="product">
+                                <a href="" target="_blank">
+                                    <div class="pro-img">
+                                    <img src="/imgs/nav-img/nav-3-2.jpg" alt="">
+                                    </div>
+                                    <div class="pro-name">小米全面屏电视E55A</div>
+                                    <div class="pro-price">1999元</div>
+                                </a>
+                                </li>
+                                <li class="product">
+                                <a href="" target="_blank">
+                                    <div class="pro-img">
+                                    <img src="/imgs/nav-img/nav-3-3.png" alt="">
+                                    </div>
+                                    <div class="pro-name">小米电视4A 32英寸</div>
+                                    <div class="pro-price">699元</div>
+                                </a>
+                                </li>
+                                <li class="product">
+                                <a href="" target="_blank">
+                                    <div class="pro-img">
+                                    <img src="/imgs/nav-img/nav-3-4.jpg" alt="">
+                                    </div>
+                                    <div class="pro-name">小米电视4A 55英寸</div>
+                                    <div class="pro-price">1799元</div>
+                                </a>
+                                </li>
+                                <li class="product">
+                                <a href="" target="_blank">
+                                    <div class="pro-img">
+                                    <img src="/imgs/nav-img/nav-3-5.jpg" alt="">
+                                    </div>
+                                    <div class="pro-name">小米电视4A 65英寸</div>
+                                    <div class="pro-price">2699元</div>
+                                </a>
+                                </li>
+                                <li class="product">
+                                <a href="" target="_blank">
+                                    <div class="pro-img">
+                                    <img src="/imgs/nav-img/nav-3-6.png" alt="">
+                                    </div>
+                                    <div class="pro-name">查看全部</div>
+                                    <div class="pro-price">查看全部</div>
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="item-menu">
-                    <span>RedMi红米</span>
-                    <!-- <div class="children"></div> -->
-                </div>
-                <div class="item-menu">
-                    <span>电视</span>
-                    <div class="children">
-                        <ul>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-1.jpg" alt="">
-                                </div>
-                                <div class="pro-name">小米壁画电视 65英寸</div>
-                                <div class="pro-price">6999元</div>
-                            </a>
-                            </li>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-2.jpg" alt="">
-                                </div>
-                                <div class="pro-name">小米全面屏电视E55A</div>
-                                <div class="pro-price">1999元</div>
-                            </a>
-                            </li>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-3.png" alt="">
-                                </div>
-                                <div class="pro-name">小米电视4A 32英寸</div>
-                                <div class="pro-price">699元</div>
-                            </a>
-                            </li>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-4.jpg" alt="">
-                                </div>
-                                <div class="pro-name">小米电视4A 55英寸</div>
-                                <div class="pro-price">1799元</div>
-                            </a>
-                            </li>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-5.jpg" alt="">
-                                </div>
-                                <div class="pro-name">小米电视4A 65英寸</div>
-                                <div class="pro-price">2699元</div>
-                            </a>
-                            </li>
-                            <li class="product">
-                            <a href="" target="_blank">
-                                <div class="pro-img">
-                                <img src="/imgs/nav-img/nav-3-6.png" alt="">
-                                </div>
-                                <div class="pro-name">查看全部</div>
-                                <div class="pro-price">查看全部</div>
-                            </a>
-                            </li>
-                        </ul>
+                <div class="header-search">
+                    <div class="wrapper">
+                        <input type="text" name="keyword" placeholder="请输入商品信息">
+                        <a href="javascript:;"></a>
                     </div>
+        
                 </div>
-            </div>
-            <div class="header-search">
-                <div class="wrapper">
-                    <input type="text" name="keyword" placeholder="请输入商品信息">
-                    <a href="javascript:;"></a>
-                </div>
-    
             </div>
         </div>
-    </div>
     </div>
 </template>
 
@@ -121,7 +123,7 @@ export default {
     name:'nav-header',
     data(){
         return {
-            username: 'jack',
+            username: '',
             phoneList: []
         }
     },
@@ -132,6 +134,12 @@ export default {
         }
     },
     methods: {
+        login(){
+            this.$router.push('/login')
+        },
+        goToCart(){
+            this.$router.push('/cart')
+        },
         getProductList(){
             instance.get('/products',{
                 params:{
@@ -258,6 +266,7 @@ export default {
                     box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
                     z-index: 10;
                     transition: all 0.5s;
+                    background-color: #fff;
                     .product{
                         position: relative;
                         float: left;
