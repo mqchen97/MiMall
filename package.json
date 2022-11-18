@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode=development",
+    "test": "vue-cli-service serve --mode=test",
+    "build": "vue-cli-service build --mode=production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -12,8 +13,10 @@
     "core-js": "^3.8.3",
     "element-ui": "^2.15.12",
     "less": "^4.1.3",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "node-sass": "^8.0.0",
     "sass-loader": "^13.2.0",
+    "stream-http": "^3.2.0",
     "swiper": "^5.3.6",
     "vue": "^2.6.14",
     "vue-awesome-swiper": "^5.0.1",
@@ -30,6 +33,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "less-loader": "^11.1.0",
+    "mockjs": "^1.1.0",
     "vue-cookie": "^1.1.4",
     "vue-template-compiler": "^2.6.14"
   },
@@ -46,7 +50,8 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "semi": 0
     }
   },
   "browserslist": [
