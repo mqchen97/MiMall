@@ -15,5 +15,6 @@ export default {
 </script>
 
 <style>
-@import './assets/less/reset.less'
+@import './assets/less/reset.less';
+@import './assets/less/base.less';
 </style>

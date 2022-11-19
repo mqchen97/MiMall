@@ -158,7 +158,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../assets/less/base.less';
 @import './../assets/less/mixin.less';
 @import '../assets/less/config.less';
 .nav-topbar{

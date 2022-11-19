@@ -28,7 +28,6 @@ export default {
 <style lang="less" scoped>
 @import './../assets/less/mixin.less';
 @import '../assets/less/config.less';
-@import '../assets/less/base.less';
 .service-bar{
     padding: 33px 0;
     color: @colorC;
