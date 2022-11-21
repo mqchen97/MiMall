@@ -22,11 +22,15 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     const res = response.data
+    const path = location.hash
     if (res.status === 0) { return res.data; }
     else if (res.status === 10) {
-        window.location.href = '/#/login'
+        if (path !== '#/index') {
+            window.location.href = '/#/login'
+        }
     } else {
         alert(res.msg)
+        return Promise.reject(res)
     }
 
 }, function (error) {

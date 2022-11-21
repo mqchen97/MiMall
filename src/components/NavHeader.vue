@@ -13,7 +13,7 @@
                     <a href="javascript:;" v-if="!username" @click="login">登录</a>
                     <a href="javascript:;" v-if="username">我的订单</a>
                     <a href="javascript:;"  v-if="!username">注册</a>
-                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{cartCount}})</a>
                 </div>
             </div>
         </div>
@@ -109,8 +109,7 @@
                     <div class="wrapper">
                         <input type="text" name="keyword" placeholder="请输入商品信息">
                         <a href="javascript:;"></a>
-                    </div>
-        
+                    </div>        
                 </div>
             </div>
         </div>
@@ -119,13 +118,16 @@
 
 <script>
 import instance from '@/util/request';
+import { mapState } from 'vuex';
 export default {
     name:'nav-header',
     data(){
         return {
-            username: '',
             phoneList: []
         }
+    },
+    computed:{
+        ...mapState(['username','cartCount'])
     },
     filters:{
         currency(val){
@@ -177,6 +179,7 @@ export default {
             background-color: #FF6600;
             text-align: center;
             color: #fff;
+            margin-right: 0;
             .icon-cart{
                 .bgImg(16px,12px,'../icon-cart-checked.png');
                 // display: inline-block;

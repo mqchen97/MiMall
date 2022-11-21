@@ -40,7 +40,7 @@
                 <swiper
                 :options="swiperOption">
                     <swiper-slide v-for="(item,index) in sliceList" :key="index">
-                        <a :href="'/#/product/'+item.id"><img v-lazy="item.img" alt=""></a>
+                        <a :href="'/#/product/'+item.id"><img :src="item.img" alt=""></a>
                     </swiper-slide>
                     <!-- Optional controls -->
                     <div class="swiper-pagination"  slot="pagination"></div>

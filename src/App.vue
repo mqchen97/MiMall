@@ -5,12 +5,29 @@
 </template>
 
 <script>
+import instance from './util/request';
 export default {
   name: 'App',
   data(){
     return {
     }
   },
+  mounted(){
+    this.getUser()
+    this.getCartCount()
+  },
+  methods:{
+    getUser(){
+      instance.get('/user').then(data=>{
+        this.$store.dispatch('saveUserName',data.username)
+      })
+    },
+    getCartCount(){
+      instance.get('/carts/products/sum').then(data=>{
+        this.$store.dispatch('saveCartCount',data)
+      })
+    }
+  }
 }
 </script>
 
