@@ -9,7 +9,7 @@
                             <div class="children">
                                 <ul v-for="(item,i) in menuList" :key="i">
                                     <li v-for="(sub,j) in item" :key="j">
-                                        <a :href="sub?'/#/product/'+sub.id:''"><img :src="sub ? sub.img : '/imgs/item-box-1.png'" alt=""> {{sub?sub.name:'小米9'}} </a>
+                                        <a :href="sub?'/#/product/'+sub.id:''"><img v-lazy="sub ? sub.img : '/imgs/item-box-1.png'" alt=""> {{sub?sub.name:'小米9'}} </a>
                                     </li>
                                 </ul>
                             </div>
@@ -40,7 +40,7 @@
                 <swiper
                 :options="swiperOption">
                     <swiper-slide v-for="(item,index) in sliceList" :key="index">
-                        <a :href="'/#/product/'+item.id"><img :src="item.img" alt=""></a>
+                        <a :href="'/#/product/'+item.id"><img v-lazy="item.img" alt=""></a>
                     </swiper-slide>
                     <!-- Optional controls -->
                     <div class="swiper-pagination"  slot="pagination"></div>
@@ -50,11 +50,11 @@
             </div>
             <div class="ads">
                 <a href="'/#/product/' + item.id" v-for="(item,index) in adsList" :key="index">
-                <img :src="item.img" alt=""></a>
+                <img v-lazy="item.img" alt=""></a>
             </div>
             <div class="banner">
                 <a href="/#/product/30">
-                    <img src="/imgs/banner-1.png" alt="">
+                    <img v-lazy="'/imgs/banner-1.png'" alt="">
                 </a>
             </div>   
         </div>
@@ -64,7 +64,7 @@
                     <div class="wrapper">
                         <div class="banner-left">
                             <a href="/#/product/30">
-                                <img src="/imgs/mix-alpha.jpg" alt="">
+                                <img v-lazy="'/imgs/mix-alpha.jpg'" alt="">
                             </a>
                         </div>
                         <div class="list-box">
@@ -72,12 +72,12 @@
                                 <div class="item" v-for="(item,j) in arr" :key="j">
                                     <span :class="{'new-pro':j%2===0}">新品</span>
                                     <div class="item-img">
-                                        <img :src="item.mainImage" alt="">
+                                        <img v-lazy="item.mainImage" alt="">
                                     </div>
                                     <div class="item-info">
                                         <h3>{{item.name}}</h3>
                                         <p>{{item.subtitle}}</p>
-                                        <p class="price">{{item.price}}元</p>
+                                        <p class="price" @click="addCart">{{item.price}}元</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,6 +86,19 @@
                 </div>               
             </div>
         <service-bar></service-bar>
+        <modal 
+            modalType="middle" 
+            title="提示" 
+            sureText="查看购物车" 
+            btnType="1"
+            :showModal="showModal"
+            @submit="goToCart"
+            @cancel="showModal = false"
+            >
+            <template v-slot:body>
+                <p>商品添加成功！</p>
+            </template>
+        </modal>
     </div>
 </template>
 
@@ -94,6 +107,7 @@ import ServiceBar from '@/components/ServiceBar.vue';
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 import instance from '@/util/request';
+import Modal from '@/components/Modal.vue';
 export default {
     name: 'index',
     data(){
@@ -182,7 +196,8 @@ export default {
                     img:'imgs/ads/ads-4.jpg'
                 },
             ],
-            phoneList:[]
+            phoneList:[],
+            showModal:false
         }
     },
     methods:{
@@ -190,17 +205,32 @@ export default {
             instance.get('/products',{
                 params:{
                     categoryId:100012,
-                    pageSize:8
+                    pageSize:14
                 }
             }).then(res=>{
+                res.list = res.list.slice(6,14)
                 this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]
             })
+        },
+        addCart(){
+            this.showModal = true
+            // instance.post('/carts',{
+            //     productId: id,
+            //     selected: true
+            // }).then(data=>{
+
+            // }).catch(error=>{
+
+            // })
+        },
+        goToCart(){
+
         }
     },
     mounted(){
         this.init()
     },
-    components:{ ServiceBar, Swiper, SwiperSlide },
+    components:{ ServiceBar, Swiper, SwiperSlide, Modal },
     directives: {
         swiper: directive
     }
