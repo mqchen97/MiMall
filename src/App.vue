@@ -14,7 +14,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 @import './assets/less/reset.less';
 @import './assets/less/base.less';
+@import './assets/less/mixin.less';
+@import './assets/less/button.less';
 </style>

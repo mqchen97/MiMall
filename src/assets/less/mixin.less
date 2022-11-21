@@ -11,3 +11,21 @@
     background: url(@img) no-repeat center;
     background-size: @size;
 }
+
+.position(@pos:absolute,@top:0,@left:0,@w:100%,@h:100%){
+    position: @pos;
+    top: @top;
+    left: @left;
+    width: @w;
+    height: @h;
+}
+
+.posImg(@pos,@top,@right,@w,@h,@img,@size:contain){
+    position: @pos;
+    top: @top;
+    right: @right;
+    width: @w;
+    height: @h;
+    background: url(@img) no-repeat center;
+    background-size: @size;
+}
