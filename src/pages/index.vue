@@ -77,7 +77,7 @@
                                     <div class="item-info">
                                         <h3>{{item.name}}</h3>
                                         <p>{{item.subtitle}}</p>
-                                        <p class="price" @click="addCart">{{item.price}}元</p>
+                                        <p class="price" @click="addCart(item.id)">{{item.price}}元</p>
                                     </div>
                                 </div>
                             </div>
@@ -212,19 +212,19 @@ export default {
                 this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]
             })
         },
-        addCart(){
-            this.showModal = true
-            // instance.post('/carts',{
-            //     productId: id,
-            //     selected: true
-            // }).then(data=>{
-
-            // }).catch(error=>{
-
-            // })
+        addCart(id){
+            instance.post('/carts',{
+                productId: id,
+                selected: true
+            }).then(data=>{
+                this.showModal = true
+                this.$store.dispatch('saveCartCount',data.cartTotalQuantity)
+            }).catch(()=>{
+                this.showModal = true
+            })
         },
         goToCart(){
-
+            this.$router.push('/cart')
         }
     },
     mounted(){

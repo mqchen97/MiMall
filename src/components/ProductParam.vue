@@ -46,6 +46,7 @@ export default {
       line-height: 70px;
       border-top:1px solid @colorH;
       background-color: #fff;
+      z-index: 10;
       &.isfixed{
         position: fixed;
         top: 0;
