@@ -18,12 +18,12 @@ export default {
   },
   methods:{
     getUser(){
-      instance.get('/user').then(data=>{
+      instance.get('/user').then((data={})=>{
         this.$store.dispatch('saveUserName',data.username)
       })
     },
     getCartCount(){
-      instance.get('/carts/products/sum').then(data=>{
+      instance.get('/carts/products/sum').then((data=0)=>{
         this.$store.dispatch('saveCartCount',data)
       })
     }
