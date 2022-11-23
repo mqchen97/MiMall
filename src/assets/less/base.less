@@ -1,3 +1,4 @@
+@import './mixin.less';
 .container{
     width: 1226px;
     margin-right: auto;
@@ -25,4 +26,30 @@ input{
 
 .clearfix:after{
     clear: both;
+}
+
+.header-logo{
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    background-color: #FF6600;
+    a{
+        display: inline-block;
+        width: 110px;
+        height: 55px;
+        &:before{
+            content: '';
+            .bgImg(55px,55px,'./../imgs/mi-logo.png');
+            background-size: contain;
+            transition: margin .2s;
+        }
+        &:after{
+            content: '';
+            .bgImg(55px,55px,'./../imgs/mi-home.png');
+        }
+        &:hover:before{
+            margin-left: -55px;
+            transition: margin .2s;
+        }
+    }
 }

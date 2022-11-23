@@ -140,6 +140,9 @@ export default {
             this.$router.push('/login')
         },
         goToCart(){
+            instance.get('/user').then(()=>{
+                
+            })
             this.$router.push('/cart')
         },
         getProductList(){
@@ -200,40 +203,31 @@ export default {
         // justify-content: space-between;
         // align-items: center;
         .flex();
-        .header-logo{
-            display: inline-block;
-            width: 55px;
-            height: 55px;
-            background-color: #FF6600;
-            a{
-                display: inline-block;
-                width: 110px;
-                height: 55px;
-                &:before{
-                    content: '';
-                    .bgImg(55px,55px,'../mi-logo.png');
-                    // display: inline-block;
-                    // height: 55px;
-                    // width: 55px;
-                    // background: url('../assets/mi-logo.png') no-repeat center;
-                    background-size: contain;
-                    transition: margin .2s;
-                }
-                &:after{
-                    content: '';
-                    .bgImg(55px,55px,'../mi-home.png');
-                    // display: inline-block;
-                    // height: 55px;
-                    // width: 55px;
-                    // background: url('../assets/mi-home.png') no-repeat center;
-                    // background-size: contain;
-                }
-                &:hover:before{
-                    margin-left: -55px;
-                    transition: margin .2s;
-                }
-            }
-        }
+        // .header-logo{
+        //     display: inline-block;
+        //     width: 55px;
+        //     height: 55px;
+        //     background-color: #FF6600;
+        //     a{
+        //         display: inline-block;
+        //         width: 110px;
+        //         height: 55px;
+        //         &:before{
+        //             content: '';
+        //             .bgImg(55px,55px,'../mi-logo.png');
+        //             background-size: contain;
+        //             transition: margin .2s;
+        //         }
+        //         &:after{
+        //             content: '';
+        //             .bgImg(55px,55px,'../mi-home.png');
+        //         }
+        //         &:hover:before{
+        //             margin-left: -55px;
+        //             transition: margin .2s;
+        //         }
+        //     }
+        // }
         .header-menu{
             display: inline-block;
             width: 643px;
