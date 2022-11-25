@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import { Message } from 'element-ui'
 import router from './router'
 import store from './store'
 import VueLazyLoad from 'vue-lazyload'
@@ -10,6 +11,9 @@ Vue.use(VueLazyLoad, {
 })
 
 Vue.use(VueCookie)
+Vue.use(Message)
+
+Vue.prototype.$message = Message
 
 Vue.config.productionTip = false
 

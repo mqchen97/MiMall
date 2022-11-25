@@ -5,35 +5,36 @@
 </template>
 
 <script>
-import instance from './util/request';
+import instance from "./util/request";
 export default {
-  name: 'App',
-  data(){
-    return {
+  name: "App",
+  data() {
+    return {};
+  },
+  mounted() {
+    if (this.$cookie.get("userId")) {
+      this.getUser();
+      this.getCartCount();
     }
   },
-  mounted(){
-    this.getUser()
-    this.getCartCount()
-  },
-  methods:{
-    getUser(){
-      instance.get('/user').then((data={})=>{
-        this.$store.dispatch('saveUserName',data.username)
-      })
+  methods: {
+    getUser() {
+      instance.get("/user").then((data = {}) => {
+        this.$store.dispatch("saveUserName", data.username);
+      });
     },
-    getCartCount(){
-      instance.get('/carts/products/sum').then((data=0)=>{
-        this.$store.dispatch('saveCartCount',data)
-      })
-    }
-  }
-}
+    getCartCount() {
+      instance.get("/carts/products/sum").then((data = 0) => {
+        this.$store.dispatch("saveCartCount", data);
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less">
-@import './assets/less/reset.less';
-@import './assets/less/base.less';
-@import './assets/less/mixin.less';
-@import './assets/less/button.less';
+@import "./assets/less/reset.less";
+@import "./assets/less/base.less";
+@import "./assets/less/mixin.less";
+@import "./assets/less/button.less";
 </style>
