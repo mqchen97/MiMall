@@ -79,8 +79,8 @@ export default {
           this.$cookie.set("userId", data.id, { expires: "Session" });
           this.saveUserName(data.username);
           this.$router.push({
-            name: "index",
-            params: {
+            path: "/index",
+            query: {
               from: "login",
             },
           });

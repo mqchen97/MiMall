@@ -8,7 +8,7 @@
           <a href="javascript:;" class="icon-close" @click="$emit('cancel')"></a>
         </div>
         <div class="modal-body">
-          <slot class="body">添加商品成功！</slot>
+          <slot name="body"></slot>
         </div>
         <div class="modal-footer">
           <a href="javascript:;" class="btn" v-if="btnType == 1" @click="$emit('submit')">{{sureText}}</a>
