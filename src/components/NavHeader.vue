@@ -11,12 +11,9 @@
         <div class="topbar-user">
           <div class="user-menu" v-if="username">
             <a href="javascript:;" @click="logout">{{ username }}</a>
-            <div class="user-children">
-              <a href="javascript:;">退出</a>
-            </div>
           </div>
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
-          <a href="javascript:;" v-if="username">我的订单</a>
+          <a href="javascript:;" v-if="username" @click="goList">我的订单</a>
           <a href="javascript:;" v-if="!username">注册</a>
           <a href="javascript:;" class="my-cart" @click="goToCart"
             ><span class="icon-cart"></span>购物车({{ cartCount }})</a
@@ -150,6 +147,9 @@ export default {
     login() {
       this.$router.push("/login");
     },
+    goList() {
+      this.$router.push("/order/list");
+    },
     goToCart() {
       instance.get("/user").then(() => {});
       this.$router.push("/cart");
@@ -182,7 +182,7 @@ export default {
   },
   mounted() {
     this.getProductList();
-    if (this.$route.params && this.$route.params.from === "index") {
+    if (this.$route.query && this.$route.query.from === "login") {
       this.getCartCount();
     }
   },
@@ -208,29 +208,6 @@ export default {
       .user-menu {
         position: relative;
         display: inline-block;
-        &:hover {
-          .user-children {
-            height: 30px;
-          }
-        }
-        .user-children {
-          border-radius: 10%;
-          position: absolute;
-          height: 0px;
-          top: 39px;
-          right: 8.5px;
-          width: 100%;
-          transition: all 0.5s;
-          overflow: hidden;
-          a {
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            color: #b0b0b0;
-            display: inline-block;
-            background-color: #333;
-          }
-        }
       }
     }
     .my-cart {

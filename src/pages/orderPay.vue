@@ -11,7 +11,10 @@
               <p>收货信息：{{ addressInfo }}</p>
             </div>
             <div class="order-total">
-              <p>应付总额：<span>2599</span>元</p>
+              <p>
+                应付总额：<span>{{ payment }}</span
+                >元
+              </p>
               <p>
                 订单详情<em
                   class="icon-down"
@@ -24,7 +27,7 @@
           <div class="item-detail" v-if="showDetail">
             <div class="item">
               <div class="detail-title">订单号：</div>
-              <div class="detail-info theme-color">{{ orderNo }}</div>
+              <div class="detail-info theme-color">{{ orderId }}</div>
             </div>
             <div class="item">
               <div class="detail-title">收货信息：</div>
@@ -66,41 +69,111 @@
         </div>
       </div>
     </div>
-    <scan-pay-code v-if="showPay"></scan-pay-code>
+    <scan-pay-code
+      v-if="showPay"
+      @close="closePayModal"
+      :img="payImg"
+    ></scan-pay-code>
+    <modal
+      title="支付确认"
+      btnType="3"
+      :showModal="showPayModal"
+      sureText="已完成支付"
+      cancelText="未支付"
+      @submit="goOrderList"
+      @cancel="showPayModal = false"
+    >
+      <template v-slot:body>
+        <p>您是否完成支付</p>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
 import instance from "@/util/request";
+import QRCode from "qrcode";
+import ScanPayCode from "@/components/ScanPayCode.vue";
+import Modal from "@/components/Modal.vue";
 export default {
   name: "order-pay",
   data() {
     return {
-      orderNo: this.$route.query.orderNo,
+      orderId: this.$route.query.orderNo,
       addressInfo: "", //收货人信息
       orderDetail: [], //订单详情,包含商品列表
-      showDetail: false,
+      showDetail: false, //显示订单详情
+      showPay: false, //是否显示微信支付框
+      payImg: "", //微信支付二维码地址
+      showPayModal: false, //是否选择二次确认对话框
+      T: "", //定时器ID
       payType: "",
-      showPay: false,
+      payment: "",
     };
   },
   mounted() {
+    console.log(this.$route);
     this.getOrderDetail();
   },
   methods: {
+    //获取订单详情
     getOrderDetail() {
-      instance.get(`/orders/${this.orderNo}`).then((res) => {
+      instance.get(`/orders/${this.orderId}`).then((res) => {
         let item = res.shippingVo;
         this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`;
         this.orderDetail = res.orderItemVoList;
+        this.payment = res.payment;
       });
     },
+    //支付
     paySumbit(payType) {
+      this.payType = payType;
       if (payType == 1) {
         window.open("/#/order/alipay?orderId=" + this.orderNo);
+      } else {
+        instance
+          .post("/pay", {
+            orderId: this.orderId,
+            orderName: "商城项目", //扫码支付时订单名称
+            amount: 0.01, //单位元
+            payType: 2, //1支付宝，2微信
+          })
+          .then((res) => {
+            QRCode.toDataURL(res.content)
+              .then((url) => {
+                this.showPay = true;
+                this.payImg = url;
+                this.loopOrderState();
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          });
       }
     },
+    //关闭微信支付
+    closePayModal() {
+      this.showPay = false;
+      this.showPayModal = true;
+      clearInterval(this.T);
+    },
+    goOrderList() {
+      console.log("goOrderList");
+      this.$router.push("/order/list");
+    },
+    //轮询检查支付状态
+    loopOrderState() {
+      this.T = setInterval(() => {
+        instance.get(`/orders/${this.orderId}`).then((res) => {
+          if (res.status === 20) {
+            clearInterval(this.T);
+            this.goOrderList();
+          }
+        });
+      }, 500);
+    },
   },
+  components: { ScanPayCode, Modal },
 };
 </script>
 
