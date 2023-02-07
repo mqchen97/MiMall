@@ -5,7 +5,6 @@ module.exports = defineConfig({
   // configureWebpack: {
   //   plugins: [new NodePolyfillPlugin()],
   // },
-  publicPath: './',
   devServer: {
     host: 'localhost',
     port: 8080,
@@ -18,5 +17,9 @@ module.exports = defineConfig({
         }
       }
     }
+  },
+  indexPath: 'cmqMall.html',
+  chainWebpack: config => {
+    config.plugins.delete('prefetch')
   }
 })
